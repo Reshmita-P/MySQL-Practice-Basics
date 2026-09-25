@@ -32,6 +32,7 @@ select count(*) as count from employee;
 # Selecting employees with even and odd id number
 select * from employee
 where id%2=0;
+
 select count(*) as even_id_count from employee
 where id%2=0;
 
@@ -42,6 +43,7 @@ where name like 'R%';
 # Print first 3 rows
 select * from employee 
 where id<=3;
+
 select * from employee
 limit 3;
 
@@ -58,9 +60,10 @@ where age>40;
 select name from employee
 where name like '_a%';
 
-#AND, OR, NOT
+#AND,OR, NOT
 select * from employee
 where id >5 and dept ='Sales';
+
 select * from employee
 where id > 5 and dept <> 'Sales';
 
