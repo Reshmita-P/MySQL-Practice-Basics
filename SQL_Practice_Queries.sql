@@ -52,6 +52,12 @@ select * from employee
 order by id desc
 limit 3;
 
+# Using window function, to display the id number in asc when aim is to print rows from last
+select id,Name, Salary, Age, Gender, Dept from(select *,
+row_number()over(order by id desc) as rn from employee) a 
+where rn <=3
+order by id;
+
 # Print gender, where age>40
 select gender from employee
 where age>40;
