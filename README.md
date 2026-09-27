@@ -9,3 +9,4 @@ MySQL Practice queries
 -> Pattern matching operators
 -> Subqueries
 -> Window Functions
+-> dayofyear(), concat()
