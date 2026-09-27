@@ -90,6 +90,67 @@ select count(*) as count_of_sales from employee where dept = 'Sales';
 select dept, count(dept) as count_of_department from employee
 group by dept;
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+# Working with 2 tables
+  
+create table customers(customer_id int primary key auto_increment, first_name varchar(30), last_name varchar(30), email varchar(30));
+insert into customers(first_name,last_name,email) 
+values ('Boy','George','george@gmail.com')
+,('George','Michael','gm@gmail.com')
+,('David','Bowie','david@gmail.com')
+,('Blue','Steele','blue@gmail.com');
+select * from customers;
+
+create table orders (order_id int primary key auto_increment, order_date date, amount float, customer_id int);
+insert into orders (order_date,amount,customer_id) 
+values ('2016/02/10',99.99,1),('2017/11/11',35.50,1),('2014/12/12',800.67,2),('2015/01/03',12.50,2);
+select * from orders;
+
+# Print leap year order_date column from orders table
+  
+#Method 1 
+select * from orders
+where dayofyear(concat(year(order_date),'-12-31')) = 366;
+
+#Method 2
+with ct as (select *,
+case
+when 
+(year(order_date) % 400 = 0)
+OR
+(year(order_date) % 4 = 0 AND year(order_date) % 100 != 0) then 1
+else 0
+end as dat from orders)
+select order_date from ct
+where dat=1;
+
+#Method 3
+select * from orders
+where
+case
+when 
+(year(order_date) % 400 = 0)
+OR
+(year(order_date) % 4 = 0 AND year(order_date) % 100 != 0) then 1
+else 0
+end;
+
+# Group the same customer_id from orders table and print the max amount 
+select max(amount) as maximum_amount from orders
+group by customer_id;
+
+# Print last_name that endswith 'e' in customers table
+select last_name from customers
+where last_name like '%e';
+
+# Print the first and last name that ends with 'e' in customers table
+select first_name, last_name from customers
+where first_name like '%e' and last_name like '%e';
+
+# Print minimum amount from last 3 rows in orders table
+select min(amount) from orders
+limit 3;
+
 
 
 
