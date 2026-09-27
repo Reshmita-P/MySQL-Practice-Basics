@@ -8,3 +8,4 @@ MySQL Practice queries
 -> Logical Operators
 -> Pattern matching operators
 -> Subqueries
+-> Window Functions
