@@ -44,6 +44,27 @@ drop table display;
 
 Cannot delete or update a parent row: a foreign key constraint fails
 
+->
+Functions - Reusable block of code; It is used to perform a particular task
+Types: 
+1. User defined function: Function definition and function call
+FUNCTION DEFINITION SYNTAX:
+-> Delimiter $$,;,// - It is a character or sequence that marks the end of the statement and tell the complier to run all the statements till it finds the delimiter
+-> create function_name(args)
+return return_type
+-> Deterministic - keyword
+-> Begin
+-> Acutal code
+-> End Statement (End$$)
+   Delimiter;
+
+Delimiter is used, becuse it will tell to run the conditions/statements given inside the block and then creates the function. this suits
+in sql, because sql runs wrt ;, using delimter removes confusion. if the function name is created first, then it may confuse on which stements to run 
+inside the block. So whenever a user defined function is created, delimiter usage is good
+FUNCTION CALL SYNTAX
+-> Select Function_name(args)
+
+
 Inheritance- Deriving a data from parent to child
 
 3. Candidate Key
