@@ -276,6 +276,143 @@ select * from students s1
 left outer join staffs s2
 on s2. staff_id=s1.student_id;
 
+# Joins
+create table suppliers(s_id int primary key auto_increment, s_name varchar(30), p_id int, p_name varchar(30));
+create table orderss(o_id int primary key auto_increment, p_id int, order_date date);
+create table product(p_id int primary key auto_increment, s_id int, p_name varchar(30), price float, foreign key(s_id) references suppliers(s_id));
+
+insert into suppliers(s_name, p_id, p_name) values ('Arun',10,'TV'),('Aravind',11,'Fridge'),('Anand',12,'Fan'),('Anitha',13,'Mobile'),('Alex',13,'Mobile');
+insert into orderss(p_id,order_date) values (12,'2026-01-01'),(11,'2026-12-12'),(11,'2026-05-05'),(12,'2026-01-01'),(12,'2026-01-01');
+insert into product(s_id,p_name,price) values (1,'TV',80000),(2,'Fridge',70000),(3,'Fan',5000),(4,'Mobile',15000),(5,'Mobile',30000);
+
+
+select * from suppliers s
+right join orderss o on s.p_id = o.p_id
+right join product p on s.p_id = p.p_id;
+
+select * from suppliers s
+left join orderss o on s.p_id = o.p_id
+left join product p on s.p_id = p.p_id;
+#fullouterjoin?
+select * from suppliers s
+left outer join orderss o on s.p_id = o.p_id
+union all
+select * from suppliers s 
+left outer join orderss o on s.p_id = o.p_id;
+
+select * from suppliers s
+left outer join orderss o on s.p_id = o.p_id
+union 
+select * from suppliers s 
+left outer join orderss o on s.p_id = o.p_id;
+
+select * from suppliers s
+right outer join orderss o on s.p_id = o.p_id
+union all
+select * from suppliers s 
+right outer join orderss o on s.p_id = o.p_id;
+
+select * from suppliers s
+left outer join orderss o on s.p_id = o.p_id
+union
+select * from suppliers s
+left outer join product p on s.p_id = p.p_id;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Primary Key and Foreign Key 
+  
+create table primari (id int primary key auto_increment, name varchar(30), age int);
+insert into primari(name, age) values('Ram',30),('Seetha',20),('Sethu',49),('Velinta',37),('Lily',41);
+select * from primari; #parent table is created
+alter table primari add column ids not null unique auto_increment; 
+/* this will give error, because primary key can be set only once and auto increment can be done only once in a table. though the constraints not null and unique belongs to primary
+key */
+
+create table forein (dept_id int primary key auto_increment,id_primari int, Department varchar(30), 
+foreign key (id_primari) references primari(id)) auto_increment=101;
+insert into forein(Department) values('Science'),('Maths'),('Social'),('Zoology');
+select * from forein; # child table created
+
+# using DEFAULT constraint
+alter table primari add column city varchar(30) default 'Chennai';
+insert into primari(name,age, city) values ('Jack',40,'Mumbai'),('Patrick',38,default); # if we have preferences to enter 
+insert into primari(name,age) values ('Jacks',40); # takes the value by default
+select * from primari;
+/* keyword default must be added, if u want to use the default value. using null there, will assume the 
+value for that row as null and it will print null, hence not using the default value */
+
+alter table primari add column date_ date default (current_date);
+insert into primari(name,age,city,date_) values('Pick',34,default,default),('Hatrick',35,'Pune','20.03.2020');
+select * from primari;
+
+# add new coulmn, and min marks must be (check) marls>45 else show error
+alter table primari add column Marks float check (marks>45);
+insert into primari(name, age, marks) values('Lily',24,59);
+insert into primari(name, age, marks) values('Anitha',42,44); #constraint violation error will throw
+
+/* Changing column name
+condition: for MySql < version 5.0 : keyword- CHANGE
+MySql > version 5.0: Keyword- Rename
+*/
+
+alter table primari rename column marks to My_marks; # if a column name has check constraint, then that column cannot be renamed nor dropped
+alter table primari rename column name to user_name;
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# User defined function to add 2 numbers
+delimiter $$
+create function add_2_number(a int,b int)
+returns int
+deterministic
+begin
+  return a+b;
+  end $$
+delimiter ;
+select add_2_number(10,30);
+
+# Create a function to return average of 3 numbers
+
+delimiter $$
+create function avg_3(a float, b float, c float)
+returns float
+deterministic
+begin
+ return (a+b+c)/3 ;
+ end $$
+delimiter ;
+select round(avg_3(40,0.2,80.5),2);
+
+# Max of 2 numbers using if else
+
+delimiter $$
+create function max_of_2(a float, b float)
+returns float
+deterministic
+begin
+ if a>b then
+   return a;
+ elseif b>a then
+   return b;
+ else return null;
+ end if;
+ end $$
+ delimiter ;
+ select max_of_2(8,2);
+
+
+
+
+
+
+
+
+
+
+			
+
+
 
 
 
